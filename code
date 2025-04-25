@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Booking UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #f3f5f8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #275ba8;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header input {
+      width: 100%;
+      max-width: 600px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .container {
+      display: flex;
+      padding: 20px;
+    }
+
+    .sidebar {
+      width: 250px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-right: 20px;
+    }
+
+    .sidebar h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar label {
+      display: block;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .doctor-list {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .doctor-card {
+      display: flex;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .doctor-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .doctor-photo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .doctor-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .doctor-text h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #222;
+    }
+
+    .doctor-text small {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .appointment {
+      text-align: right;
+    }
+
+    .appointment button {
+      padding: 8px 16px;
+      border: 1px solid #275ba8;
+      color: #275ba8;
+      background-color: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .appointment span {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .search-suggestions {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  width: calc(100% - 40px);
+  max-width: 600px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.search-suggestions div {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.search-suggestions div:last-child {
+  border-bottom: none;
+}
+
+.search-suggestions div:hover {
+  background-color: #f1f1f1;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <input type="text" placeholder="Search Symptoms, Doctors, Specialists, Clinics" id="searchInput"/>
+    <div class="search-suggestions" id="suggestions"></div>
+
+  </div>
+
+  <div class="container">
+    <!-- Sidebar Filters -->
+    <div class="sidebar">
+      <h3>Sort by</h3>
+      <label><input type="radio" name="sort"> Price: Low-High</label>
+      <label><input type="radio" name="sort"> Experience - Most Experience first</label>
+
+      <hr/>
+
+      <h3>Specialities</h3>
+      <label><input type="checkbox"> Neurologist</label>
+      <label><input type="checkbox"> Oncologist</label>
+      <label><input type="checkbox"> Ayurveda</label>
+      <label><input type="checkbox"> Homeopath</label>
+
+      <hr/>
+
+      <h3>Mode of consultation</h3>
+      <label><input type="radio" name="mode"> Video Consultation</label>
+      <label><input type="radio" name="mode" checked> In-clinic Consultation</label>
+      <label><input type="radio" name="mode"> All</label>
+    </div>
+
+    <!-- Doctor Cards -->
+    <div class="doctor-list" id="doctorList">
+      <!-- Doctor Card Template -->
+      <div class="doctor-card" data-name="Dr. Munaf Inamdar">
+        <div class="doctor-info">
+          <div class="doctor-photo" style="background-image: url('https://randomuser.me/api/portraits/men/45.jpg')"></div>
+          <div class="doctor-text">
+            <h4>Dr. Munaf Inamdar</h4>
+            <small>General Physician • 27 yrs exp</small>
+            <small>Kondhawa Khurd</small>
+          </div>
+        </div>
+        <div class="appointment">
+          <span>₹ 600</span>
+          <button>Book Appointment</button>
+        </div>
+      </div>
+
+      <div class="doctor-card" data-name="Dr. Subhash Bajaj">
+        <div class="doctor-info">
+          <div class="doctor-photo" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg')"></div>
+          <div class="doctor-text">
+            <h4>Dr. Subhash Bajaj</h4>
+            <small>General Physician • 11 yrs exp</small>
+            <small>Wanowarie</small>
+          </div>
+        </div>
+        <div class="appointment">
+          <span>₹ 600</span>
+          <button>Book Appointment</button>
+        </div>
+      </div>
+
+      <div class="doctor-card" data-name="Dr. Mufaddal Zakir">
+        <div class="doctor-info">
+          <div class="doctor-photo" style="background-image: url('https://randomuser.me/api/portraits/men/56.jpg')"></div>
+          <div class="doctor-text">
+            <h4>Dr. Mufaddal Zakir</h4>
+            <small>General Physician • 27 yrs exp</small>
+            <small>Wanwadi</small>
+          </div>
+        </div>
+        <div class="appointment">
+          <span>₹ 600</span>
+          <button>Book Appointment</button>
+        </div>
+      </div>
+
+      <div class="doctor-card" data-name="Dr. Ajay Gangoli">
+        <div class="doctor-info">
+          <div class="doctor-photo" style="background-image: url('https://randomuser.me/api/portraits/men/61.jpg')"></div>
+          <div class="doctor-text">
+            <h4>Dr. Ajay Gangoli</h4>
+            <small>General Physician • 34 yrs exp</small>
+            <small>Wanowarie</small>
+          </div>
+        </div>
+        <div class="appointment">
+          <span>₹ 400</span>
+          <button>Book Appointment</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const doctors = document.querySelectorAll('.doctor-card');
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsBox = document.getElementById('suggestions');
+  
+    const getMatches = (term) => {
+      return Array.from(doctors).filter(doc =>
+        doc.getAttribute('data-name').toLowerCase().includes(term.toLowerCase())
+      );
+    };
+  
+    searchInput.addEventListener('input', () => {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      suggestionsBox.innerHTML = '';
+      if (searchTerm === '') {
+        suggestionsBox.style.display = 'none';
+        return;
+      }
+  
+      const matches = getMatches(searchTerm);
+      if (matches.length > 0) {
+        matches.forEach(doc => {
+          const name = doc.getAttribute('data-name');
+          const div = document.createElement('div');
+          div.textContent = name;
+          div.onclick = () => {
+            doc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            doc.style.boxShadow = '0 0 10px #275ba8';
+            setTimeout(() => doc.style.boxShadow = '', 2000);
+            suggestionsBox.style.display = 'none';
+            searchInput.value = '';
+          };
+          suggestionsBox.appendChild(div);
+        });
+        suggestionsBox.style.display = 'flex';
+      } else {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+  
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.header')) {
+        suggestionsBox.style.display = 'none';
+      }
+    });
+  </script>
+  
+</body>
+</html>
